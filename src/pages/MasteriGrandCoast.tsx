@@ -60,7 +60,7 @@ const ZoomableImage = ({ src, alt }: { src: string, alt: string }) => {
   return (
     <>
       <div className="relative group cursor-zoom-in overflow-hidden rounded-3xl border border-earth/5 shadow-sm" onClick={() => setIsOpen(true)}>
-        <img src={src} alt={alt} className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" referrerPolicy="no-referrer" />
+        <img src={src} alt={alt} loading="lazy" className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" referrerPolicy="no-referrer" />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
           <div className="bg-white/90 p-4 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-xl scale-90 group-hover:scale-100">
             <Maximize2 className="w-6 h-6 text-primary" />
@@ -540,7 +540,7 @@ export default function MasteriGrandCoast({ onOpenConsultation }: { onOpenConsul
   return (
     <div className="bg-bg-light font-sans text-earth overflow-x-hidden">
       <SEO 
-        title="Masteri Grand Coast - Bảng Giá & Chính Sách Ưu Đãi Mới Nhất"
+        title="Masteri Grand Coast | Nam BĐS"
         description="Masteri Grand Coast - Dự án căn hộ cao cấp nhất tại Ocean Park 2. Cập nhật bảng giá, chính sách bán hàng và tiến độ dự án Masteri Grand Coast mới nhất."
         image="https://i.postimg.cc/PJhS16g2/V070_CT05_FACADE_GOLDEN_HOUR_(3).jpg"
         type="website"
@@ -661,7 +661,7 @@ export default function MasteriGrandCoast({ onOpenConsultation }: { onOpenConsul
                 variants={fadeInUp}
                 className="group relative h-[400px] md:h-[500px] rounded-[32px] md:rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700"
               >
-                <img src={group.image} alt={group.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <img src={group.image} alt={group.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
                 <div className="absolute inset-0 bg-gradient-to-t from-earth via-earth/20 to-transparent"></div>
                 <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end">
                   <div className={`w-12 h-12 md:w-14 md:h-14 ${group.color} rounded-2xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform`}>
@@ -808,7 +808,9 @@ export default function MasteriGrandCoast({ onOpenConsultation }: { onOpenConsul
              <img 
                src="https://i.postimg.cc/ZqQSxZYs/tong-mat-bang-phan-khu-the-wave-masteri-grand-coast-2048x1374-20260121054202-6qinh.jpg" 
                alt="Tổng mặt bằng phân khu The Wave" 
+               loading="lazy"
                className="w-full h-auto object-cover"
+               referrerPolicy="no-referrer"
              />
           </motion.div>
         </div>
@@ -858,7 +860,9 @@ export default function MasteriGrandCoast({ onOpenConsultation }: { onOpenConsul
              <img 
                src="https://i.postimg.cc/hvd3xzpM/masteri-grand-coast-vi-tri-cac-toa-20260121053717-1xypz.jpg" 
                alt="Vị trí các tòa Masteri Grand Coast" 
+               loading="lazy"
                className="w-full h-auto object-cover"
+               referrerPolicy="no-referrer"
              />
           </motion.div>
           <p className="text-center mt-6 text-earth/60 font-light italic">
@@ -897,7 +901,9 @@ export default function MasteriGrandCoast({ onOpenConsultation }: { onOpenConsul
             <img 
               src={waveFloorPlans[activeWaveTab]} 
               alt={`Mặt bằng ${activeWaveTab}`} 
+              loading="lazy"
               className="w-full h-auto object-cover"
+              referrerPolicy="no-referrer"
             />
           </motion.div>
         </div>
@@ -1633,7 +1639,7 @@ export default function MasteriGrandCoast({ onOpenConsultation }: { onOpenConsul
       {/* Section 12: CTA chốt cuối */}
       <section className="py-20 md:py-32 bg-earth text-white text-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <img src="https://i.postimg.cc/PJhS16g2/V070_CT05_FACADE_GOLDEN_HOUR_(3).jpg" alt="Masteri Grand Coast Ocean City Background" className="w-full h-full object-cover" />
+          <img src="https://i.postimg.cc/PJhS16g2/V070_CT05_FACADE_GOLDEN_HOUR_(3).jpg" alt="Masteri Grand Coast Ocean City Background" loading="lazy" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </div>
         <div className="container mx-auto px-6 relative z-10">
           <motion.div

@@ -485,6 +485,7 @@ const AboutPage = (_props: { key?: string }) => {
           <img 
             src="https://picsum.photos/seed/masterise-hq/1920/1080" 
             alt="Masterise Homes" 
+            loading="lazy"
             className="w-full h-full object-cover scale-105 animate-pulse-slow"
             referrerPolicy="no-referrer"
           />
@@ -548,7 +549,7 @@ const AboutPage = (_props: { key?: string }) => {
             </div>
             <div className="relative">
               <div className="aspect-[4/5] rounded-[64px] overflow-hidden shadow-2xl">
-                <img src="https://picsum.photos/seed/masterise-status/800/1000" alt="Masterise Position" className="w-full h-full object-cover" />
+                <img src="https://picsum.photos/seed/masterise-status/800/1000" alt="Masterise Position" loading="lazy" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
               </div>
               <div className="absolute -bottom-10 -left-10 bg-white p-10 rounded-[40px] shadow-xl border border-earth/5 hidden md:block">
                 <p className="text-5xl font-serif text-primary mb-2">15+</p>
@@ -592,7 +593,7 @@ const AboutPage = (_props: { key?: string }) => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div className="order-2 lg:order-1">
-              <img src="https://picsum.photos/seed/masterise-partner/800/600" alt="Partners" className="rounded-[48px] shadow-2xl" />
+              <img src="https://picsum.photos/seed/masterise-partner/800/600" alt="Partners" loading="lazy" className="rounded-[48px] shadow-2xl" referrerPolicy="no-referrer" />
             </div>
             <div className="order-1 lg:order-2">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 border border-white/20 rounded-full mb-8">
@@ -833,7 +834,7 @@ const NewsPage = (_props: { key?: string }) => {
           {NEWS.map(item => (
             <div key={item.id} className="group cursor-pointer">
               <div className="rounded-[40px] overflow-hidden mb-8 h-72 shadow-sm group-hover:shadow-2xl transition-all duration-700">
-                <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" referrerPolicy="no-referrer" />
               </div>
               <p className="text-primary text-[10px] font-black uppercase tracking-widest mb-4">{item.category}</p>
               <h4 className="text-2xl font-serif font-light mb-4 group-hover:text-primary transition-colors leading-tight">{item.title}</h4>
