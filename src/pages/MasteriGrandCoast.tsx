@@ -59,8 +59,8 @@ const ZoomableImage = ({ src, alt }: { src: string, alt: string }) => {
 
   return (
     <>
-      <div className="relative group cursor-zoom-in overflow-hidden rounded-3xl border border-earth/5 shadow-sm w-full h-full" onClick={() => setIsOpen(true)}>
-        <img src={src} alt={alt} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" referrerPolicy="no-referrer" />
+      <div className="relative group cursor-zoom-in overflow-hidden rounded-3xl border border-earth/5 shadow-sm" onClick={() => setIsOpen(true)}>
+        <img src={src} alt={alt} className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105" referrerPolicy="no-referrer" />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
           <div className="bg-white/90 p-4 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-xl scale-90 group-hover:scale-100">
             <Maximize2 className="w-6 h-6 text-primary" />
@@ -124,19 +124,40 @@ const SectionHeading = ({ title, subtitle, light = false, center = true }: { tit
 );
 
 const InlineConsultationForm = ({ dark = false, horizontal = false }: { dark?: boolean, horizontal?: boolean }) => {
-  const [formData, setFormData] = useState({ name: '', phone: '', email: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setIsSuccess(true);
+        setFormData({ name: '', phone: '' });
+        setTimeout(() => setIsSuccess(false), 5000);
+      } else {
+        alert(result.error || "Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại.");
+      }
+    } catch (error) {
+      alert("Có lỗi xảy ra khi gửi thông tin. Vui lòng kiểm tra kết nối mạng.");
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: '', phone: '', email: '' });
-      setTimeout(() => setIsSuccess(false), 5000);
-    }, 1000);
+    }
   };
 
   if (isSuccess) {
@@ -164,7 +185,7 @@ const InlineConsultationForm = ({ dark = false, horizontal = false }: { dark?: b
     : "text-[10px] font-black uppercase tracking-widest text-earth/40 ml-4";
 
   return (
-    <form onSubmit={handleSubmit} className={horizontal ? "grid grid-cols-1 md:grid-cols-4 gap-6" : "space-y-5"}>
+    <form onSubmit={handleSubmit} className={horizontal ? "grid grid-cols-1 md:grid-cols-3 gap-6" : "space-y-5"}>
       <div className="space-y-2">
         <label className={labelClass}>Họ và tên</label>
         <input 
@@ -186,17 +207,6 @@ const InlineConsultationForm = ({ dark = false, horizontal = false }: { dark?: b
           placeholder="0xxx xxx xxx" 
           value={formData.phone}
           onChange={e => setFormData({ ...formData, phone: e.target.value })}
-          className={inputClass} 
-        />
-      </div>
-      <div className="space-y-2">
-        <label className={labelClass}>Email</label>
-        <input 
-          required
-          type="email" 
-          placeholder="example@email.com" 
-          value={formData.email}
-          onChange={e => setFormData({ ...formData, email: e.target.value })}
           className={inputClass} 
         />
       </div>

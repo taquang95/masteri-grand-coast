@@ -63,22 +63,43 @@ const SectionHeading = ({ title, subtitle, light = false, center = true }: { tit
 );
 
 const ConsultationModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  const [formData, setFormData] = useState({ name: '', phone: '', email: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          setIsSuccess(false);
+          onClose();
+          setFormData({ name: '', phone: '' });
+        }, 2000);
+      } else {
+        alert(result.error || "Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại.");
+      }
+    } catch (error) {
+      alert("Có lỗi xảy ra khi gửi thông tin. Vui lòng kiểm tra kết nối mạng.");
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      setTimeout(() => {
-        setIsSuccess(false);
-        onClose();
-        setFormData({ name: '', phone: '', email: '' });
-      }, 2000);
-    }, 1000);
+    }
   };
 
   return (
@@ -149,7 +170,7 @@ const ConsultationModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =
                 <>
                   <div className="mb-6 md:mb-8">
                     <h3 className="text-xl md:text-2xl font-serif font-light mb-2 text-earth">Đăng ký tư vấn</h3>
-                    <p className="text-earth/60 font-light text-xs md:text-sm">Điền thông tin để nhận trọn bộ tài liệu và bảng giá chi tiết qua Email/Zalo.</p>
+                    <p className="text-earth/60 font-light text-xs md:text-sm">Điền thông tin để nhận trọn bộ tài liệu và bảng giá chi tiết qua Zalo.</p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
@@ -174,17 +195,6 @@ const ConsultationModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =
                         placeholder="0xxx xxx xxx" 
                         value={formData.phone}
                         onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-5 py-3 md:px-6 md:py-4 bg-bg-light border border-earth/5 rounded-xl md:rounded-2xl focus:border-primary/50 text-earth font-light outline-none transition-all text-sm md:text-base"
-                      />
-                    </div>
-                    <div className="space-y-1.5 md:space-y-2">
-                      <label className="block text-[10px] font-black uppercase tracking-widest text-earth/40 ml-4">Email</label>
-                      <input 
-                        required
-                        type="email" 
-                        placeholder="example@email.com" 
-                        value={formData.email}
-                        onChange={e => setFormData({ ...formData, email: e.target.value })}
                         className="w-full px-5 py-3 md:px-6 md:py-4 bg-bg-light border border-earth/5 rounded-xl md:rounded-2xl focus:border-primary/50 text-earth font-light outline-none transition-all text-sm md:text-base"
                       />
                     </div>
@@ -373,8 +383,8 @@ const Footer = ({ onOpenConsultation, onNavigate }: { onOpenConsultation: () => 
             <p className="text-white/60 text-sm font-light mb-6">Nhận thông tin bảng giá và chính sách ưu đãi mới nhất.</p>
             <div className="space-y-3">
               <input 
-                type="email" 
-                placeholder="Email của bạn" 
+                type="tel" 
+                placeholder="Số điện thoại của bạn" 
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-primary/50 outline-none text-white placeholder-white/20"
               />
               <button 
